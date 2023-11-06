@@ -1,3 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body,
 #root {
@@ -7,4 +11,5 @@ body,
 body {
   margin: 0;
   box-sizing: border-box;
+  font-family: var(--font-family) !important;
 }

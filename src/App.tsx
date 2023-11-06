@@ -1,6 +1,7 @@
 import { PresentationControls, Stage } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
+import { Skeleton } from "./components/Skeleton";
 
 export default function App() {
 
@@ -9,13 +10,10 @@ export default function App() {
       <Canvas>
         <PresentationControls cursor>
           <Stage environment={'city'} adjustCamera={2} shadows={false}>
-            <mesh>
-              <boxGeometry />
-              <meshStandardMaterial />
-            </mesh>
+            <Skeleton />
           </Stage>
+          <planeGeometry args={[20, 20]} />
         </PresentationControls>
-
       </Canvas>
     </>
   )
