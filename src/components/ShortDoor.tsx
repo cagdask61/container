@@ -1,5 +1,5 @@
-import * as THREE from 'three'
 import React from 'react'
+import * as THREE from 'three'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 
@@ -24,8 +24,8 @@ type GLTFResult = GLTF & {
 
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
-export function LongWall(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/model/long-wall.gltf') as GLTFResult
+export function ShortDoor(props: JSX.IntrinsicElements['group']) {
+  const { nodes, materials } = useGLTF('/models/short-door.gltf') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <group rotation={[Math.PI / 2, 0, 0]}>
@@ -40,4 +40,4 @@ export function LongWall(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/model/long-wall.gltf')
+useGLTF.preload('/models/short-door.gltf')

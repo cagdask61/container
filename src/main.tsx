@@ -2,6 +2,14 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(<App />)
+import "primereact/resources/themes/lara-light-indigo/theme.css";
+import { PrimeReactProvider } from 'primereact/api';
+
+
+ReactDOM.createRoot(document.getElementById('root')!).render(
+    <PrimeReactProvider>
+        <App />
+    </PrimeReactProvider>
+)
 //<React.StrictMode>
 //</React.StrictMode>,

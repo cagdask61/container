@@ -25,7 +25,7 @@ type GLTFResult = GLTF & {
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function Skeleton(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/model/skeleton.gltf') as GLTFResult
+  const { nodes, materials } = useGLTF('/models/skeleton.gltf') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <group rotation={[Math.PI / 2, 0, 0]}>
@@ -40,4 +40,4 @@ export function Skeleton(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/model/skeleton.gltf')
+useGLTF.preload('/models/skeleton.gltf')
