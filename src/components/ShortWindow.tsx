@@ -26,7 +26,7 @@ export function ShortWindow(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/models/short-window.gltf') as GLTFResult
   return (
     <group {...props} dispose={null}>
-      <group rotation={[Math.PI / 2, 0, 0]}>
+      <group rotation={[Math.PI / 2, 0, 0]} scale={0.1}>
         <mesh geometry={nodes.short_pencere_1.geometry} material={materials.FrontColor} />
         <mesh geometry={nodes.short_pencere_2.geometry} material={materials._White_} />
         <mesh geometry={nodes.short_pencere_3.geometry} material={materials.White1} />

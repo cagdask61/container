@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
+import { LongWall } from './LongWall'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -24,11 +25,13 @@ type GLTFResult = GLTF & {
 
 type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
-export function Skeleton(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/models/skeleton.gltf') as GLTFResult
+export const Skeleton = (props: JSX.IntrinsicElements['group']) => {
+  const { nodes, materials } = useGLTF('/models/skeleton.gltf') as GLTFResult;
+
+
   return (
-    <group {...props} dispose={null}>
-      <group rotation={[Math.PI / 2, 0, 0]}>
+    <group {...props} dispose={null} castShadow={true}>
+      <group rotation={[Math.PI / 2, 0, 0]} scale={0.1}>
         <mesh geometry={nodes.kasa_1.geometry} material={materials.Wood_Lumber_ButtJoined} />
         <mesh geometry={nodes.kasa_2.geometry} material={materials.Wood_OSB} />
         <mesh geometry={nodes.kasa_3.geometry} material={materials.Wood_Floor_Dark} />
