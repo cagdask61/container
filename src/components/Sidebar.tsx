@@ -4,6 +4,11 @@ import { Skeleton } from "./Skeleton";
 import { LongWall } from "./LongWall";
 import { Tree } from "primereact/tree";
 import { TreeNode } from "primereact/treenode";
+import { ShortDoor } from "./ShortDoor";
+import { ShortWindow } from "./ShortWindow";
+import { LONG_WALL } from "../constants/long-wall";
+import { SHORT_DOOR } from "../constants/short-door";
+import { SHORT_WINDOW } from "../constants/short-window";
 
 export function Sidebar() {
 
@@ -14,19 +19,23 @@ export function Sidebar() {
 
     function generateContainerModel() {
         containerState.add({
-            position: [0, 0, 24],
+            position: [0, 0, 24 * containerState.containers.length],
             skeleton: <Skeleton position={[0, 0, 0]} />,
             longSection: {
-                first: <LongWall position={[0, 0.5, -1.5]} />,
-                second: <LongWall position={[19.5, 0.5, -1.5]} />
+                first: <LongWall position={LONG_WALL.first.position} />,
+                second: <LongWall position={LONG_WALL.second.position} />
             },
+            shortSection: {
+                first: <ShortDoor position={SHORT_DOOR.first.position} />,
+                second: <ShortWindow position={SHORT_WINDOW.second.position} rotation={SHORT_WINDOW.second.rotation} />
+            }
         })
     }
 
     useEffect(() => {
         setNodes(containerState.containers.map<TreeNode>((_, i) => ({
             key: `${i}`,
-            label: "İskelet",
+            label: `İskelet ${i + 1}`,
             children: [
                 {
                     key: `${i}-0`,
@@ -75,14 +84,16 @@ export function Sidebar() {
                 </button>
                 <div className="w-full h-auto flex flex-col gap-y-5 items-center">
                     <h2 className="text-3xl text-white mt-1">Ayarlar</h2>
-                    <div className="outline outline-1 outline-white/50 p-2 flex items-center justify-center gap-x-2 rounded w-52">
-                        <span className="text-white">İskelet : </span>
-                        <button className="bg-green-300 px-2 py-1 font-normal rounded" onClick={generateContainerModel}>
-                            Ekle
+                    <div className="p-2 flex items-center justify-center gap-x-2 rounded w-52">
+                        <button className="outline outline-1 outline-white/50 hover:bg-white/10 px-4 py-2 font-normal rounded" onClick={generateContainerModel}>
+                            İskelet Ekle
                         </button>
                     </div>
-                    <div className="outline outline-1 outline-white/50 w-52 rounded">
-                        <Tree value={nodes} className="w-full bg-white/10" />
+                    <div className="flex flex-col items-center gap-y-5 p-2 w-full h-96 overflow-auto rounded">
+                        <span className="">Nesneler</span>
+                        {nodes.length > 0 && (
+                            <Tree value={nodes} className="w-full bg-white/10 overflow-auto" />
+                        )}
                     </div>
                 </div>
             </div>
