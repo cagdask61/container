@@ -1,33 +1,28 @@
-import { Fragment, useEffect } from "react";
-import { OrbitControls, Sky, Stage } from "@react-three/drei";
+import { Center, GizmoHelper, GizmoViewport, OrbitControls, PivotControls, PresentationControls, Stage, Text3D } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
-
-import { Skeleton } from "./components/Skeleton";
-import { Ground } from "./components/Ground";
 import { useContainerStore } from "./store/container-store";
 import { Sidebar } from "./components/Sidebar";
-import { LongWall } from "./components/LongWall";
-import { ShortDoor } from "./components/ShortDoor";
-import { ShortWindow } from "./components/ShortWindow";
-
+import { useState } from "react";
 
 export default function App() {
 
   const containers = useContainerStore((state) => state.containers);
 
-  useEffect(() => {
-    console.log("container state : ", containers);
-  }, [containers]);
-
+  const [drageable, setDrageable] = useState<boolean>(false);
 
   return (
     <>
       <Sidebar />
       <Canvas shadows>
-        <Sky sunPosition={[0.1, 0.5, 1]} />
+        <color attach={'background'} args={['black']} />
+
+        <GizmoHelper alignment="bottom-center">
+          <GizmoViewport labelColor="white" axisHeadScale={1} />
+        </GizmoHelper>
         <OrbitControls makeDefault />
-        <Stage intensity={2} environment={'city'} adjustCamera={3} shadows={{ type: 'contact', color: '#000000', colorBlend: 2, opacity: 1 }}>
+
+        <Stage intensity={2} environment={'city'} adjustCamera={1} shadows={{ type: 'contact', color: '#000000', colorBlend: 2, opacity: 1 }}>
           {containers.length > 0 ? (
             containers.map((c, i) => (
               <group key={i} position={c.position} >
@@ -44,10 +39,16 @@ export default function App() {
               </group>
             ))
           ) : (
-            <Skeleton position={[0, 0, 0]} />
+            <PivotControls activeAxes={[drageable, false, drageable]} disableRotations={true} disableSliders={true} scale={30} anchor={[0, 1, 0]}>
+              <Center>
+                <Text3D onDoubleClick={() => setDrageable(false)} onClick={() => setDrageable(true)} animations={[]} font={'./fonts/noto-sans-regular.json'} position={[0, 0, 0]} size={10} height={7} letterSpacing={2} bevelEnabled={true} bevelOffset={0.7} >
+                  Merhaba
+                  <meshStandardMaterial color={'red'} />
+                </Text3D>
+              </Center>
+            </PivotControls>
           )}
         </Stage>
-        <Ground />
       </Canvas >
     </>
   )

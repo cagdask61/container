@@ -2,7 +2,6 @@ import * as THREE from 'three'
 import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
-import { LongWall } from './LongWall'
 
 type GLTFResult = GLTF & {
   nodes: {
@@ -27,7 +26,6 @@ type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicE
 
 export const Skeleton = (props: JSX.IntrinsicElements['group']) => {
   const { nodes, materials } = useGLTF('/models/skeleton.gltf') as GLTFResult;
-
 
   return (
     <group {...props} dispose={null} castShadow={true}>

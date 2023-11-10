@@ -21,3 +21,7 @@ body {
   box-sizing: border-box;
   font-family: var(--font-family) !important;
 }
+
+.tab-height {
+  @apply h-[30rem] overflow-y-auto;
+}
