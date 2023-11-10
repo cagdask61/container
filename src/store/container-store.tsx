@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { ContainerModel } from "../models/container-model";
-import { Skeleton } from "../components/Skeleton";
 
 export interface ContainerStateModel {
     containers: Array<ContainerModel>;

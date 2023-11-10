@@ -1,19 +1,24 @@
 import { useEffect, useState } from "react";
+
+import { Tree } from "primereact/tree";
+import { TreeNode } from "primereact/treenode";
+import { Dialog } from "primereact/dialog";
+
 import { useContainerStore } from "../store/container-store";
 import { Skeleton } from "./Skeleton";
 import { LongWall } from "./LongWall";
-import { Tree } from "primereact/tree";
-import { TreeNode } from "primereact/treenode";
 import { ShortDoor } from "./ShortDoor";
 import { ShortWindow } from "./ShortWindow";
 import { LONG_WALL } from "../constants/long-wall";
 import { SHORT_DOOR } from "../constants/short-door";
 import { SHORT_WINDOW } from "../constants/short-window";
+import { GenerateContainer } from "./GenerateContainer";
 
 export function Sidebar() {
 
     const containerState = useContainerStore();
 
+    const [dialogVisible, setDialogVisible] = useState<boolean>(false);
     const [visible, setVisible] = useState<boolean>(false);
     const [nodes, setNodes] = useState<Array<TreeNode>>([]);
 
@@ -71,6 +76,9 @@ export function Sidebar() {
 
     return (
         <>
+            <Dialog header="Konteyner Oluştur" visible={dialogVisible} style={{ width: '50vw' }} breakpoints={{ '960px': '75vw', '641px': '100vw' }} onHide={() => setDialogVisible(false)}>
+                <GenerateContainer onSubmitHandler={() => (setDialogVisible(false))} />
+            </Dialog>
 
             {!visible && (
                 <button onClick={() => setVisible(true)} className="absolute top-0 left-0 mt-1 ml-1 rounded-full z-50 p-2 flex items-center justify-center bg-black ease-in-out duration-300 hover:scale-105">
@@ -85,14 +93,14 @@ export function Sidebar() {
                 <div className="w-full h-auto flex flex-col gap-y-5 items-center">
                     <h2 className="text-3xl text-white mt-1">Ayarlar</h2>
                     <div className="p-2 flex items-center justify-center gap-x-2 rounded w-52">
-                        <button className="outline outline-1 outline-white/50 hover:bg-white/10 px-4 py-2 font-normal rounded" onClick={generateContainerModel}>
-                            İskelet Ekle
+                        <button className="outline outline-1 outline-white/50 hover:bg-white/10 px-4 py-2 font-normal rounded" onClick={() => setDialogVisible(true)}>
+                            Oluştur
                         </button>
                     </div>
                     <div className="flex flex-col items-center gap-y-5 p-2 w-full h-96 overflow-auto rounded">
                         <span className="">Nesneler</span>
                         {nodes.length > 0 && (
-                            <Tree value={nodes} className="w-full bg-white/10 overflow-auto" />
+                            <Tree value={nodes} className="w-full overflow-auto" />
                         )}
                     </div>
                 </div>

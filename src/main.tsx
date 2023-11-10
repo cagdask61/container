@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 
-import "primereact/resources/themes/lara-dark-indigo/theme.css";
+import "primereact/resources/themes/md-dark-deeppurple/theme.css";
 import { PrimeReactProvider } from 'primereact/api';
 
 
