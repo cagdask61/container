@@ -1,18 +1,18 @@
 export interface ContainerModel {
-    skeleton: JSX.Element;
+    key: string;
+    skeleton: ContainerSectionOptionsModel;
     position?: [x: number, y: number, z: number];
-    longSection?: ContainerLongSectionModel;
-    shortSection?: ContainerShortSectionModel;
+    longSection?: ContainerSectionModel;
+    shortSection?: ContainerSectionModel;
 }
 
-export interface ContainerLongSectionModel {
+export interface ContainerSectionModel {
     position?: [x: number, y: number, z: number];
-    first?: JSX.Element;
-    second?: JSX.Element;
+    first?: ContainerSectionOptionsModel;
+    second?: ContainerSectionOptionsModel;
 }
 
-export interface ContainerShortSectionModel {
-    position?: [x: number, y: number, z: number];
-    first?: JSX.Element;
-    second?: JSX.Element;
+export interface ContainerSectionOptionsModel {
+    name?: string;
+    key?: string;
 }

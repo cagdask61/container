@@ -27,7 +27,7 @@ type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicE
 export function ShortDoor(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/models/short-door.gltf') as GLTFResult
   return (
-    <group {...props} dispose={null} castShadow={true}>
+    <group {...props} dispose={null}>
       <group rotation={[Math.PI / 2, 0, 0]} scale={0.1}>
         <mesh geometry={nodes.short_door_1.geometry} material={materials.White1} />
         <mesh geometry={nodes.short_door_2.geometry} material={materials._31} />

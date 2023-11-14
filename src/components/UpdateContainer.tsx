@@ -1,22 +1,15 @@
-import { memo } from "react";
-
-import { Dropdown } from "primereact/dropdown";
 import { useFormik } from "formik";
+import { Dropdown } from "primereact/dropdown";
 
-import { useContainerStore } from "../store/container-store";
-import { useLongSections } from "../hooks/use-long-sections";
+import { useLongSections } from "../hooks/use-long-sections"
 import { useShortSections } from "../hooks/use-short-sections";
-import { useSkeletons } from "../hooks/use-skeletons";
 
-export default memo(function GenerateContainer() {
+export function UpdateContainer() {
 
-    const containerState = useContainerStore();
-
-    const skeletons = useSkeletons();
     const longSections = useLongSections();
     const shortSections = useShortSections();
 
-    const { handleSubmit, values, resetForm, setFieldValue } = useFormik({
+    const { values, handleSubmit, setFieldValue } = useFormik({
         initialValues: {
             longSection: {
                 firstKey: "",
@@ -27,45 +20,8 @@ export default memo(function GenerateContainer() {
                 secondKey: "",
             }
         },
-        onSubmit: (values) => {
-            const firstLongSection = longSections.firstSections.find(fls => fls?.key === values.longSection.firstKey);
-            const secondLongSection = longSections.secondSections.find(sls => sls?.key === values.longSection.secondKey);
+        onSubmit(values) {
 
-            const firstShortSection = shortSections.firstSections.find(fss => fss?.key === values.shortSection.firstKey);
-            const secondShortSection = shortSections.secondSections.find(sss => sss?.key === values.shortSection.secondKey);
-
-            //+z 
-            //24 * containerState.containers.length
-            containerState.add({
-                position: [20 * containerState.containers.length, 0, 0],
-                key: `${Math.round(Math.random() * 1000)}-${Math.round(Math.random() * 1000)}`,
-                skeleton: {
-                    key: skeletons[0]?.key,
-                    name: skeletons[0]?.name,
-                },
-                longSection: {
-                    first: {
-                        name: firstLongSection?.name,
-                        key: firstLongSection?.key,
-                    },
-                    second: {
-                        name: secondLongSection?.name,
-                        key: secondLongSection?.key,
-                    },
-                },
-                shortSection: {
-                    first: {
-                        name: firstShortSection?.name,
-                        key: firstShortSection?.key,
-                    },
-                    second: {
-                        name: secondShortSection?.name,
-                        key: secondShortSection?.key,
-                    }
-                }
-            });
-
-            resetForm();
         }
     })
 
@@ -110,4 +66,4 @@ export default memo(function GenerateContainer() {
             </div>
         </form>
     )
-})
+}

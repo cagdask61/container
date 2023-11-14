@@ -28,7 +28,7 @@ export const Skeleton = (props: JSX.IntrinsicElements['group']) => {
   const { nodes, materials } = useGLTF('/models/skeleton.gltf') as GLTFResult;
 
   return (
-    <group {...props} dispose={null} castShadow={true}>
+    <group {...props} dispose={null}>
       <group rotation={[Math.PI / 2, 0, 0]} scale={0.1}>
         <mesh geometry={nodes.kasa_1.geometry} material={materials.Wood_Lumber_ButtJoined} />
         <mesh geometry={nodes.kasa_2.geometry} material={materials.Wood_OSB} />
