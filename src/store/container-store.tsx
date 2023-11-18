@@ -6,7 +6,7 @@ export interface ContainerStateModel {
     add: (model: ContainerModel) => void;
     delete: (index: number) => void;
     deleteWithKey: (key: string) => void;
-    update: (key: string, model: ContainerModel) => void;
+    update: (model: ContainerModel) => void;
 }
 
 // Refactoring: JSON.parse(localStorage.getItem('containers')!) as []
@@ -34,9 +34,9 @@ export const useContainerStore = create<ContainerStateModel>((set) => ({
             containers: state.containers
         }
     }),
-    update: (key: string, model: ContainerModel) => set((state) => {
-        let containerModel = state.containers.find((c) => c.key === key);
-        containerModel = model;
+    update: (model: ContainerModel) => set((state) => {
+        const containerIndex = state.containers.findIndex((c) => c.key === model.key);
+        state.containers.splice(containerIndex, 1, model);
 
         return {
             containers: state.containers

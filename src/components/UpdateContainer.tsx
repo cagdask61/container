@@ -1,13 +1,21 @@
+import { useEffect } from "react";
+
 import { useFormik } from "formik";
 import { Dropdown } from "primereact/dropdown";
 
 import { useLongSections } from "../hooks/use-long-sections"
 import { useShortSections } from "../hooks/use-short-sections";
+import { useContainerSelectionStore } from "../store/container-selection-store";
+import { useContainerStore } from "../store/container-store";
+import { useSkeletons } from "../hooks/use-skeletons";
 
 export function UpdateContainer() {
 
+    const skeletons = useSkeletons();
     const longSections = useLongSections();
     const shortSections = useShortSections();
+    const containerState = useContainerStore();
+    const containerSelectionState = useContainerSelectionStore();
 
     const { values, handleSubmit, setFieldValue } = useFormik({
         initialValues: {
@@ -21,9 +29,54 @@ export function UpdateContainer() {
             }
         },
         onSubmit(values) {
+            const firstLongSection = longSections.firstSections.find(fls => fls?.key === values.longSection.firstKey);
+            const secondLongSection = longSections.secondSections.find(sls => sls?.key === values.longSection.secondKey);
+
+            const firstShortSection = shortSections.firstSections.find(fss => fss?.key === values.shortSection.firstKey);
+            const secondShortSection = shortSections.secondSections.find(sss => sss?.key === values.shortSection.secondKey);
+
+            containerState.update({
+                key: containerSelectionState.selectedContainer.key,
+                skeleton: {
+                    key: skeletons[0]?.key,
+                    name: skeletons[0]?.name,
+                },
+                longSection: {
+                    first: {
+                        key: firstLongSection?.key,
+                        name: firstLongSection?.name
+                    },
+                    second: {
+                        key: secondLongSection?.key,
+                        name: secondLongSection?.name
+                    }
+                },
+                shortSection: {
+                    first: {
+                        key: firstShortSection?.key,
+                        name: firstShortSection?.name
+                    },
+                    second: {
+                        key: secondShortSection?.key,
+                        name: secondShortSection?.name
+                    }
+                }
+            })
+
+            containerSelectionState.select({
+                key: containerSelectionState.selectedContainer.key
+            });
 
         }
-    })
+    });
+
+    useEffect(() => {
+        setFieldValue('longSection.firstKey', containerSelectionState.selectedContainer.longSection?.first?.key);
+        setFieldValue('longSection.secondKey', containerSelectionState.selectedContainer.longSection?.second?.key);
+        setFieldValue('shortSection.firstKey', containerSelectionState.selectedContainer.shortSection?.first?.key);
+        setFieldValue('shortSection.secondKey', containerSelectionState.selectedContainer.shortSection?.second?.key);
+
+    }, [containerSelectionState.selectedContainer.key]);
 
     return (
         <form method="post" onSubmit={handleSubmit} className="flex flex-col items-center gap-y-3">
@@ -62,7 +115,7 @@ export function UpdateContainer() {
                 </div>
             </div>
             <div className="w-full">
-                <button type="submit" className="bg-green-400 active:bg-green-300 hover:scale-95 text-black w-full h-10 rounded font-medium ease-in-out duration-300">Oluştur</button>
+                <button type="submit" className="bg-yellow-400 active:bg-yellow-300 hover:scale-95 text-black w-full h-10 rounded font-medium ease-in-out duration-300">Güncelle</button>
             </div>
         </form>
     )

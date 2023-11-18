@@ -1,6 +1,6 @@
 export interface ContainerModel {
     key: string;
-    skeleton: ContainerSectionOptionsModel;
+    skeleton: ContainerOptionsModel;
     position?: [x: number, y: number, z: number];
     longSection?: ContainerSectionModel;
     shortSection?: ContainerSectionModel;
@@ -8,11 +8,11 @@ export interface ContainerModel {
 
 export interface ContainerSectionModel {
     position?: [x: number, y: number, z: number];
-    first?: ContainerSectionOptionsModel;
-    second?: ContainerSectionOptionsModel;
+    first?: ContainerOptionsModel;
+    second?: ContainerOptionsModel;
 }
 
-export interface ContainerSectionOptionsModel {
+export interface ContainerOptionsModel {
     name?: string;
     key?: string;
 }

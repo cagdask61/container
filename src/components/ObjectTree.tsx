@@ -24,7 +24,7 @@ function ObjectTree() {
             return {
                 key: `${i}`,
                 label: `Konteyner ${i + 1}`,
-                className: `${containerSelectionState.selectedKey === c.key ? 'bg-white/5 rounded' : ''}`,
+                className: `${containerSelectionState.selectedContainer.key === c.key ? 'bg-white/5 rounded' : ''}`,
                 selectable: true,
                 children: [
                     {
@@ -57,38 +57,20 @@ function ObjectTree() {
                             }
                         ]
                     },
-                    // {
-                    //     key: `${i}-2`,
-                    //     label: 'İşlemler',
-                    //     // className: 'text-[#20df80]',
-                    //     children: [
-                    //         {
-                    //             key: `${i}-2-0`,
-                    //             label: 'Sil',
-                    //             className: 'bg-red-400/5 hover:bg-red-400/10 outline outline-1 outline-red-500 rounded p-0',
-
-                    //         },
-
-                    //         {
-                    //             key: `${i}-2-1`,
-                    //             label: 'Güncelle',
-                    //             className: 'bg-yellow-400/5 hover:bg-yellow-400/10 outline outline-1 outline-yellow-500 rounded p-0'
-                    //         },
-
-                    //     ]
-                    // }
                 ]
             }
         }))
-    }, [containerState.containers, containerSelectionState.selectedKey]);
+    }, [containerState.containers, containerSelectionState.selectedContainer]);
 
     function deleteContainer() {
-        containerState.deleteWithKey(containerSelectionState.selectedKey);
-        containerSelectionState.select("");
+        containerState.deleteWithKey(containerSelectionState.selectedContainer.key);
+        containerSelectionState.select({
+            key: ""
+        });
     }
 
     function updateContainer() {
-        
+
     }
 
     return (

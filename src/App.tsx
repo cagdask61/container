@@ -7,14 +7,23 @@ import { useContainerSelectionStore } from "./store/container-selection-store";
 import { useSkeletons } from "./hooks/use-skeletons";
 import { useLongSections } from "./hooks/use-long-sections";
 import { useShortSections } from "./hooks/use-short-sections";
+import { ContainerModel } from "./models/container-model";
 
 export default function App() {
 
-  const containers = useContainerStore((state) => state.containers);
+  const containers = useContainerStore((state) => state.containers)
   const containerSelectionState = useContainerSelectionStore();
   const skeletons = useSkeletons();
   const longSections = useLongSections();
   const shortSections = useShortSections();
+
+  function selectContainer(container: ContainerModel) {
+    containerSelectionState.select({
+      key: container.key,
+      longSection: container.longSection,
+      shortSection: container.shortSection
+    })
+  }
 
   return (
     <>
@@ -30,7 +39,7 @@ export default function App() {
         <Stage intensity={2} environment={'city'} adjustCamera={1}>
           {containers.length > 0 ? (
             containers.map((c) => (
-              <group key={c.key} position={c.position} onClick={() => containerSelectionState.select(c.key)}>
+              <group key={c.key} position={c.position} onClick={() => selectContainer(c)}>
                 {skeletons.find(s => s.key === c.skeleton.key)?.value}
                 <group position={c.longSection?.position}>
                   {longSections.firstSections.find((fls => fls.key === c.longSection?.first?.key))?.value}
@@ -40,7 +49,7 @@ export default function App() {
                   {shortSections.firstSections.find(fss => fss.key === c.shortSection?.first?.key)?.value}
                   {shortSections.secondSections.find(sss => sss.key === c.shortSection?.second?.key)?.value}
                 </group>
-                <group visible={containerSelectionState.selectedKey === c.key} position={[10, 30, -12]}>
+                <group visible={containerSelectionState.selectedContainer.key === c.key} position={[10, 30, -12]}>
                   <mesh>
                     <coneGeometry args={[3, 3, 3]} />
                     <meshNormalMaterial />

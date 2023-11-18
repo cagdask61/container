@@ -19,7 +19,7 @@ export function useShortSections() {
         {
             name: 'Pencere',
             key: "shortWindow",
-            value: <ShortWindow position={SHORT_DOOR.first.position} />
+            value: <ShortWindow position={SHORT_WINDOW.first.position} />
         }
     ] as Array<SectionModel>;
 
