@@ -1,4 +1,4 @@
-import React from 'react'
+// import React from 'react'
 import * as THREE from 'three'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
@@ -20,7 +20,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
+// type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function ShortWindow(props: JSX.IntrinsicElements['group']) {
   const { nodes, materials } = useGLTF('/models/short-window.gltf') as GLTFResult

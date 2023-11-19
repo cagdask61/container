@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import React from 'react'
+// import React from 'react'
 import { useGLTF } from '@react-three/drei'
 import { GLTF } from 'three-stdlib'
 
@@ -22,7 +22,7 @@ type GLTFResult = GLTF & {
   }
 }
 
-type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
+// type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export const Skeleton = (props: JSX.IntrinsicElements['group']) => {
   const { nodes, materials } = useGLTF('/models/skeleton.gltf') as GLTFResult;
