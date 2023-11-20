@@ -55,6 +55,28 @@ export default function App() {
                     <meshNormalMaterial />
                   </mesh>
                 </group>
+                {/*
+                  #ff2060 = x
+                  #2080ff = z
+                   */}
+                <group visible={containerSelectionState.selectedContainer.key === c.key}>
+                  <mesh position={[10, 12, 5]}>
+                    <boxGeometry args={[3, 3, 3]} />
+                    <meshStandardMaterial color={"#2080ff"} />
+                  </mesh>
+                  <mesh position={[10, 12, -29]}>
+                    <boxGeometry args={[3, 3, 3]} />
+                    <meshStandardMaterial color={"#2080ff"} />
+                  </mesh>
+                  <mesh position={[25, 12, -12]}>
+                    <boxGeometry args={[3, 3, 3]} />
+                    <meshStandardMaterial color={"#ff2060"} />
+                  </mesh>
+                  <mesh position={[-5, 12, -12]}>
+                    <boxGeometry args={[3, 3, 3]} />
+                    <meshStandardMaterial color={"#ff2060"} />
+                  </mesh>
+                </group>
               </group>
             ))
           ) : (
