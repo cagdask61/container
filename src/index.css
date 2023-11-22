@@ -23,5 +23,5 @@ body {
 }
 
 .tab-height {
-  @apply h-[31.5rem] overflow-y-auto flex flex-col items-center gap-y-5 py-1;
+  @apply h-[31.5rem] overflow-y-auto flex flex-col items-center gap-y-5 p-1;
 }

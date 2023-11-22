@@ -11,11 +11,12 @@ import { useSkeletons } from "../hooks/use-skeletons";
 
 export function UpdateContainer() {
 
+    const containerSelectionState = useContainerSelectionStore();
+    const containerState = useContainerStore();
+
     const skeletons = useSkeletons();
     const longSections = useLongSections();
     const shortSections = useShortSections();
-    const containerState = useContainerStore();
-    const containerSelectionState = useContainerSelectionStore();
 
     const { values, handleSubmit, setFieldValue } = useFormik({
         initialValues: {
@@ -35,8 +36,12 @@ export function UpdateContainer() {
             const firstShortSection = shortSections.firstSections.find(fss => fss?.key === values.shortSection.firstKey);
             const secondShortSection = shortSections.secondSections.find(sss => sss?.key === values.shortSection.secondKey);
 
+
+            const selectedContainerModel = containerState.containers.find(c => c.key === containerSelectionState.key);
+
             containerState.update({
-                key: containerSelectionState.selectedContainer.key,
+                position: selectedContainerModel?.position,
+                key: containerSelectionState.key,
                 skeleton: {
                     key: skeletons[0]?.key,
                     name: skeletons[0]?.name,
@@ -63,20 +68,19 @@ export function UpdateContainer() {
                 }
             })
 
-            containerSelectionState.select({
-                key: containerSelectionState.selectedContainer.key
-            });
-
+            containerSelectionState.select(containerSelectionState.key)
         }
     });
 
     useEffect(() => {
-        setFieldValue('longSection.firstKey', containerSelectionState.selectedContainer.longSection?.first?.key);
-        setFieldValue('longSection.secondKey', containerSelectionState.selectedContainer.longSection?.second?.key);
-        setFieldValue('shortSection.firstKey', containerSelectionState.selectedContainer.shortSection?.first?.key);
-        setFieldValue('shortSection.secondKey', containerSelectionState.selectedContainer.shortSection?.second?.key);
+        const selectedContainerModel = containerState.containers.find(c => c.key === containerSelectionState.key);
 
-    }, [containerSelectionState.selectedContainer.key]);
+        setFieldValue('longSection.firstKey', selectedContainerModel?.longSection?.first?.key);
+        setFieldValue('longSection.secondKey', selectedContainerModel?.longSection?.second?.key);
+        setFieldValue('shortSection.firstKey', selectedContainerModel?.shortSection?.first?.key);
+        setFieldValue('shortSection.secondKey', selectedContainerModel?.shortSection?.second?.key);
+
+    }, [containerSelectionState.key]);
 
     return (
         <form method="post" onSubmit={handleSubmit} className="flex flex-col items-center gap-y-3">

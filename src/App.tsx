@@ -1,45 +1,45 @@
-import { GizmoHelper, GizmoViewport, OrbitControls, Stage, Text3D } from "@react-three/drei";
+import { GizmoHelper, GizmoViewport, OrbitControls, Outlines, Stage, Text3D } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 import { useContainerStore } from "./store/container-store";
-import { Sidebar } from "./components/Sidebar";
 import { useContainerSelectionStore } from "./store/container-selection-store";
+import { useContainerPositionStore } from "./store/container-position-store";
+
 import { useSkeletons } from "./hooks/use-skeletons";
 import { useLongSections } from "./hooks/use-long-sections";
 import { useShortSections } from "./hooks/use-short-sections";
-import { ContainerModel } from "./models/container-model";
+import { usePositionBoxs } from "./hooks/use-position-boxs";
+
+import { Sidebar } from "./components/Sidebar";
 
 export default function App() {
 
   const containers = useContainerStore((state) => state.containers)
   const containerSelectionState = useContainerSelectionStore();
+  const containerPositionState = useContainerPositionStore();
+
   const skeletons = useSkeletons();
   const longSections = useLongSections();
   const shortSections = useShortSections();
-
-  function selectContainer(container: ContainerModel) {
-    containerSelectionState.select({
-      key: container.key,
-      longSection: container.longSection,
-      shortSection: container.shortSection
-    })
-  }
+  const positionBoxs = usePositionBoxs();
 
   return (
     <>
       <Sidebar />
       <Canvas>
+
         <color attach={'background'} args={['black']} />
+
         <OrbitControls makeDefault />
 
         <GizmoHelper alignment="bottom-center">
           <GizmoViewport labelColor="white" axisHeadScale={1} />
         </GizmoHelper>
 
-        <Stage intensity={2} environment={'city'} adjustCamera={1}>
+        <Stage intensity={1} environment={'city'} adjustCamera={1}>
           {containers.length > 0 ? (
             containers.map((c) => (
-              <group key={c.key} position={c.position} onClick={() => selectContainer(c)}>
+              <group key={c.key} position={c.position} onClick={() => containerSelectionState.select(c.key)}>
                 {skeletons.find(s => s.key === c.skeleton.key)?.value}
                 <group position={c.longSection?.position}>
                   {longSections.firstSections.find((fls => fls.key === c.longSection?.first?.key))?.value}
@@ -49,33 +49,29 @@ export default function App() {
                   {shortSections.firstSections.find(fss => fss.key === c.shortSection?.first?.key)?.value}
                   {shortSections.secondSections.find(sss => sss.key === c.shortSection?.second?.key)?.value}
                 </group>
-                <group visible={containerSelectionState.selectedContainer.key === c.key} position={[10, 30, -12]}>
+                <group visible={containerSelectionState.key === c.key} position={[10, 30, -12]}>
                   <mesh>
                     <coneGeometry args={[3, 3, 3]} />
                     <meshNormalMaterial />
                   </mesh>
                 </group>
-                {/*
-                  #ff2060 = x
-                  #2080ff = z
-                   */}
-                <group visible={containerSelectionState.selectedContainer.key === c.key}>
-                  <mesh position={[10, 12, 5]}>
-                    <boxGeometry args={[3, 3, 3]} />
-                    <meshStandardMaterial color={"#2080ff"} />
-                  </mesh>
-                  <mesh position={[10, 12, -29]}>
-                    <boxGeometry args={[3, 3, 3]} />
-                    <meshStandardMaterial color={"#2080ff"} />
-                  </mesh>
-                  <mesh position={[25, 12, -12]}>
-                    <boxGeometry args={[3, 3, 3]} />
-                    <meshStandardMaterial color={"#ff2060"} />
-                  </mesh>
-                  <mesh position={[-5, 12, -12]}>
-                    <boxGeometry args={[3, 3, 3]} />
-                    <meshStandardMaterial color={"#ff2060"} />
-                  </mesh>
+                <group>
+                  {positionBoxs.map((box, i) => (
+                    <mesh visible={containerSelectionState.key === c.key} key={i} position={box.position}
+                      onClick={() => containerPositionState.setPosition(
+                        {
+                          x: box.directionPosition.x,
+                          z: box.directionPosition.z,
+                        },
+                        {
+                          x: c.position?.[0]!,
+                          z: c.position?.[2]!
+                        })}>
+                      <boxGeometry args={[3, 3, 3]} />
+                      <meshStandardMaterial color={box.directionPosition.x === containerPositionState.position.direction.x && box.directionPosition.z === containerPositionState.position.direction.z && containerSelectionState.key === c.key ? 'yellow' : box.color} />
+                      {/* <Outlines visible={box.directionPosition.x === containerPositionState.position.direction.x && box.directionPosition.z === containerPositionState.position.direction.z && containerSelectionState.key === c.key} angle={10} color={'yellow'} opacity={1} screenspace={false} thickness={0.5} transparent={false} /> */}
+                    </mesh>
+                  ))}
                 </group>
               </group>
             ))

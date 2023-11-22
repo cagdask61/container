@@ -4,6 +4,8 @@ import { Dropdown } from "primereact/dropdown";
 import { useFormik } from "formik";
 
 import { useContainerStore } from "../store/container-store";
+import { useContainerPositionStore } from "../store/container-position-store";
+
 import { useLongSections } from "../hooks/use-long-sections";
 import { useShortSections } from "../hooks/use-short-sections";
 import { useSkeletons } from "../hooks/use-skeletons";
@@ -11,6 +13,7 @@ import { useSkeletons } from "../hooks/use-skeletons";
 export default memo(function GenerateContainer() {
 
     const containerState = useContainerStore();
+    const containerPositionState = useContainerPositionStore();
 
     const skeletons = useSkeletons();
     const longSections = useLongSections();
@@ -34,11 +37,9 @@ export default memo(function GenerateContainer() {
             const firstShortSection = shortSections.firstSections.find(fss => fss?.key === values.shortSection.firstKey);
             const secondShortSection = shortSections.secondSections.find(sss => sss?.key === values.shortSection.secondKey);
 
-            //+z 
-            //24 * containerState.containers.length
             containerState.add({
-                position: [20 * containerState.containers.length, 0, 0],
-                key: `${Math.round(Math.random() * 1000)}-${Math.round(Math.random() * 1000)}`,
+                position: [containerPositionState.position.direction.x + containerPositionState.position.container.x, 0, containerPositionState.position.direction.z + containerPositionState.position.container.z],
+                key: `${Math.round(Math.random() * 9999)}-${Math.round(Math.random() * 9999)}`,
                 skeleton: {
                     key: skeletons[0]?.key,
                     name: skeletons[0]?.name,
@@ -66,6 +67,7 @@ export default memo(function GenerateContainer() {
             });
 
             resetForm();
+
         }
     })
 

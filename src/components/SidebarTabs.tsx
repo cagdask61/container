@@ -5,22 +5,22 @@ import { TabView, TabPanel } from 'primereact/tabview';
 import { useContainerSelectionStore } from '../store/container-selection-store';
 import { UpdateContainer } from './UpdateContainer';
 import GenerateContainer from "./GenerateContainer";
-import ObjectTree from "./ObjectTree";
+import Objects from "./Objects";
 
-function SidebarTabs() {
+export default memo(function SidebarTabs() {
 
     const containerSelectionState = useContainerSelectionStore();
 
     return (
         <TabView className="w-full" >
             <TabPanel header="Nesneler" contentClassName="tab-height">
-                <ObjectTree />
+                <Objects />
             </TabPanel>
             <TabPanel header="Oluştur" contentClassName="tab-height">
                 <GenerateContainer />
             </TabPanel>
             <TabPanel header="Güncelle" contentClassName="tab-height">
-                {containerSelectionState.selectedContainer.key ? (
+                {containerSelectionState.key ? (
                     <UpdateContainer />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center">
@@ -32,5 +32,4 @@ function SidebarTabs() {
             </TabPanel>
         </TabView>
     )
-}
-export default memo(SidebarTabs);
+})
