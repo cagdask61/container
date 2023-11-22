@@ -1,4 +1,4 @@
-import { GizmoHelper, GizmoViewport, OrbitControls, Outlines, Stage, Text3D } from "@react-three/drei";
+import { GizmoHelper, GizmoViewport, OrbitControls, Stage, Text3D } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
 import { useContainerStore } from "./store/container-store";
@@ -69,7 +69,6 @@ export default function App() {
                         })}>
                       <boxGeometry args={[3, 3, 3]} />
                       <meshStandardMaterial color={box.directionPosition.x === containerPositionState.position.direction.x && box.directionPosition.z === containerPositionState.position.direction.z && containerSelectionState.key === c.key ? 'yellow' : box.color} />
-                      {/* <Outlines visible={box.directionPosition.x === containerPositionState.position.direction.x && box.directionPosition.z === containerPositionState.position.direction.z && containerSelectionState.key === c.key} angle={10} color={'yellow'} opacity={1} screenspace={false} thickness={0.5} transparent={false} /> */}
                     </mesh>
                   ))}
                 </group>
