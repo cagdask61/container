@@ -11,6 +11,8 @@ import { useShortSections } from "./hooks/use-short-sections";
 import { usePositionBoxs } from "./hooks/use-position-boxs";
 
 import { Sidebar } from "./components/Sidebar";
+import { PositionBoxModel } from "./models/position-box-model";
+import { ContainerModel } from "./models/container-model";
 
 export default function App() {
 
@@ -55,9 +57,9 @@ export default function App() {
                     <meshNormalMaterial />
                   </mesh>
                 </group>
-                <group>
+                <group visible={containerSelectionState.key === c.key}>
                   {positionBoxs.map((box, i) => (
-                    <mesh visible={containerSelectionState.key === c.key} key={i} position={box.position}
+                    <mesh key={i} position={box.position}
                       onClick={() => containerPositionState.setPosition(
                         {
                           x: box.directionPosition.x,
@@ -68,7 +70,18 @@ export default function App() {
                           z: c.position?.[2]!
                         })}>
                       <boxGeometry args={[3, 3, 3]} />
-                      <meshStandardMaterial color={box.directionPosition.x === containerPositionState.position.direction.x && box.directionPosition.z === containerPositionState.position.direction.z && containerSelectionState.key === c.key ? 'yellow' : box.color} />
+                      <meshStandardMaterial color={(
+                        box.directionPosition.x === containerPositionState.position.direction.x
+                          &&
+                          box.directionPosition.z === containerPositionState.position.direction.z
+                          &&
+                          containerSelectionState.key === c.key
+                          &&
+                          c.position?.[0]! === containerPositionState.position.container.x
+                          &&
+                          c.position?.[2]! === containerPositionState.position.container.z
+                          ? 'yellow' : box.color
+                      )} />
                     </mesh>
                   ))}
                 </group>
