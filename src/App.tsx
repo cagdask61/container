@@ -11,8 +11,6 @@ import { useShortSections } from "./hooks/use-short-sections";
 import { usePositionBoxs } from "./hooks/use-position-boxs";
 
 import { Sidebar } from "./components/Sidebar";
-import { PositionBoxModel } from "./models/position-box-model";
-import { ContainerModel } from "./models/container-model";
 
 export default function App() {
 
