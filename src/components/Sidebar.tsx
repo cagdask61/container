@@ -10,7 +10,7 @@ export default memo(function Sidebar() {
 
     useEffect(() => {
         window.addEventListener('resize', () => {
-            setMobile(window.innerWidth >= 450 ? false : true);
+            setMobile(window.innerWidth <= 500 ? true : false);
         })
     }, []);
 
