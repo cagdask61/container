@@ -3,7 +3,8 @@ import { memo } from 'react';
 import { TabView, TabPanel } from 'primereact/tabview';
 
 import { useContainerSelectionStore } from '../store/container-selection-store';
-import { UpdateContainer } from './UpdateContainer';
+
+import UpdateContainer from './UpdateContainer';
 import GenerateContainer from "./GenerateContainer";
 import Objects from "./Objects";
 

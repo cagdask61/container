@@ -10,7 +10,7 @@ import { useLongSections } from "./hooks/use-long-sections";
 import { useShortSections } from "./hooks/use-short-sections";
 import { usePositionBoxs } from "./hooks/use-position-boxs";
 
-import { Sidebar } from "./components/Sidebar";
+import Sidebar from "./components/Sidebar";
 
 export default function App() {
 

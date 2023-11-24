@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import SidebarTabs from "./SidebarTabs";
 
 
-export function Sidebar() {
+export default memo(function Sidebar() {
 
     const [visible, setVisible] = useState<boolean>(false);
 
@@ -10,16 +10,13 @@ export function Sidebar() {
 
     useEffect(() => {
         window.addEventListener('resize', () => {
-            setMobile(window.innerWidth >= 500 ? false : true);
+            setMobile(window.innerWidth >= 450 ? false : true);
         })
     }, []);
 
     return (
         <>
-            <p className="text-white font-bold text-lg absolute right-0 bottom-0 z-50">
-                {mobile ? 'mobil' : 'pc'}
-            </p>
-            {!visible && (
+            {visible === false && (
                 <button onClick={() => setVisible(true)} className="absolute top-0 left-0 mt-1 ml-1 rounded-lg z-50 p-1.5 flex items-center justify-center bg-white ease-in-out duration-300 hover:scale-105">
                     <svg className="fill-black" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"></path></svg>
                 </button>
@@ -36,4 +33,4 @@ export function Sidebar() {
             </div>
         </>
     )
-}
+})

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 
 import { useFormik } from "formik";
 import { Dropdown } from "primereact/dropdown";
@@ -9,7 +9,7 @@ import { useContainerSelectionStore } from "../store/container-selection-store";
 import { useContainerStore } from "../store/container-store";
 import { useSkeletons } from "../hooks/use-skeletons";
 
-export function UpdateContainer() {
+export default memo(function UpdateContainer() {
 
     const containerSelectionState = useContainerSelectionStore();
     const containerState = useContainerStore();
@@ -123,4 +123,4 @@ export function UpdateContainer() {
             </div>
         </form>
     )
-}
+})
