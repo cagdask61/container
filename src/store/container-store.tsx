@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { ContainerModel } from "../models/container-model";
+import { getObject, setObject } from "../helpers/local-storage";
 
 export interface ContainerStateModel {
     containers: Array<ContainerModel>;
@@ -9,13 +10,12 @@ export interface ContainerStateModel {
     update: (model: ContainerModel) => void;
 }
 
-// Refactoring: JSON.parse(localStorage.getItem('containers')!) as []
-// localStorage.setItem('containers', JSON.stringify(result))
-
 export const useContainerStore = create<ContainerStateModel>((set) => ({
-    containers: [],
+    containers: getObject('containers')! ?? [],
     add: (model: ContainerModel) => set((state) => {
         const result = [...state.containers, model];
+        setObject("containers", result);
+
         return {
             containers: result
         }
@@ -29,6 +29,7 @@ export const useContainerStore = create<ContainerStateModel>((set) => ({
     deleteWithKey: (key: string) => set((state) => {
         const containerIndex = state.containers.findIndex((c) => c.key === key);
         state.containers.splice(containerIndex, 1);
+        setObject("containers", state.containers);
 
         return {
             containers: state.containers
@@ -37,6 +38,7 @@ export const useContainerStore = create<ContainerStateModel>((set) => ({
     update: (model: ContainerModel) => set((state) => {
         const containerIndex = state.containers.findIndex((c) => c.key === model.key);
         state.containers.splice(containerIndex, 1, model);
+        setObject("containers", state.containers);
 
         return {
             containers: state.containers
