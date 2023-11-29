@@ -23,7 +23,7 @@ type GLTFResult = GLTF & {
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function ShortWindow(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/models/short-window.gltf') as GLTFResult
+  const { nodes, materials } = useGLTF('./models/short-window.gltf') as GLTFResult
   return (
     <group {...props} dispose={null}>
       <group rotation={[Math.PI / 2, 0, 0]} scale={0.1}>
@@ -37,4 +37,4 @@ export function ShortWindow(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/models/short-window.gltf')
+useGLTF.preload('./models/short-window.gltf')

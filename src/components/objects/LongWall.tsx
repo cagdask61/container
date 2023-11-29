@@ -15,7 +15,7 @@ type GLTFResult = GLTF & {
 // type ContextType = Record<string, React.ForwardRefExoticComponent<JSX.IntrinsicElements['mesh']>>
 
 export function LongWall(props: JSX.IntrinsicElements['group']) {
-  const { nodes, materials } = useGLTF('/models/long-wall.gltf') as GLTFResult;
+  const { nodes, materials } = useGLTF('./models/long-wall.gltf') as GLTFResult;
   return (
     <group {...props} dispose={null} scale={0.1}>
       <mesh geometry={nodes.long_wall.geometry} material={materials.RAL9002_Paneel} rotation={[Math.PI / 2, 0, 0]} />
@@ -23,4 +23,4 @@ export function LongWall(props: JSX.IntrinsicElements['group']) {
   )
 }
 
-useGLTF.preload('/models/long-wall.gltf')
+useGLTF.preload('./models/long-wall.gltf')
