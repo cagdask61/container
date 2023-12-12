@@ -27,7 +27,7 @@ export default memo(function Sidebar() {
                     <svg className="fill-white" xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24"><path d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z"></path></svg>
                 </button>
                 <div className="w-full h-auto flex flex-col gap-y-3 items-center">
-                    <h2 className="text-2xl text-white pt-2">Yönetim Paneli</h2>
+                    <h2 className="text-2xl text-white pt-2">Panel</h2>
                     <SidebarTabs />
                 </div>
             </div>

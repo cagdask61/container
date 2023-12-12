@@ -8,16 +8,16 @@ export function useShortSections() {
 
     const firstSections = [
         {
-            name: "Boş",
+            name: "Empty",
             key: ""
         },
         {
-            name: "Kapı",
+            name: "Door",
             key: "shortDoor",
             value: <ShortDoor position={SHORT_DOOR.first.position} />
         },
         {
-            name: 'Pencere',
+            name: 'Window',
             key: "shortWindow",
             value: <ShortWindow position={SHORT_WINDOW.first.position} />
         }
@@ -25,16 +25,16 @@ export function useShortSections() {
 
     const secondSections = [
         {
-            name: "Boş",
+            name: "Empty",
             key: ""
         },
         {
-            name: "Kapı",
+            name: "Door",
             key: "shortDoor",
             value: <ShortDoor position={SHORT_DOOR.second.position} rotation={SHORT_DOOR.second.rotation} />
         },
         {
-            name: 'Pencere',
+            name: 'Window',
             key: "shortWindow",
             value: <ShortWindow position={SHORT_WINDOW.second.position} rotation={SHORT_WINDOW.second.rotation} />
         }

@@ -6,11 +6,11 @@ export function useLongSections() {
 
     const firstSections = [
         {
-            name: "Boş",
+            name: "Empty",
             key: ""
         },
         {
-            name: "Duvar",
+            name: "Wall",
             key: "longWall",
             value: <LongWall position={LONG_WALL.first.position} />,
         },
@@ -18,11 +18,11 @@ export function useLongSections() {
 
     const secondSections = [
         {
-            name: "Boş",
+            name: "Empty",
             key: ""
         },
         {
-            name: "Duvar",
+            name: "Wall",
             key: "longWall",
             value: <LongWall position={LONG_WALL.second.position} />,
         },

@@ -1,11 +1,14 @@
-import { Vector3 } from "three";
-
 export interface PositionBoxModel {
     name: string;
     directionPosition: {
         x: number;
+        y: number;
         z: number;
     };
-    position: Vector3;
+    position: {
+        x: number;
+        y: number;
+        z: number;
+    };
     color: string;
 }

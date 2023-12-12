@@ -1,3 +1,4 @@
+import { Vector3 } from "three";
 import { GizmoHelper, GizmoViewport, OrbitControls, Stage, Text3D } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 
@@ -23,6 +24,8 @@ export default function App() {
   const shortSections = useShortSections();
   const positionBoxs = usePositionBoxs();
 
+  const generatePosition = (p?: { x: number, y: number, z: number }) => new Vector3(p?.x, p?.y, p?.z);
+
   return (
     <>
       <Sidebar />
@@ -39,45 +42,45 @@ export default function App() {
         <Stage intensity={1} environment={'city'} adjustCamera={1}>
           {containers.length > 0 ? (
             containers.map((c) => (
-              <group key={c.key} position={c.position} onClick={() => containerSelectionState.select(c.key)}>
+              <group key={c.key} position={generatePosition(c.position)} onClick={() => containerSelectionState.select(c.key)}>
                 {skeletons.find(s => s.key === c.skeleton.key)?.value}
-                <group position={c.longSection?.position}>
+                <group position={generatePosition(c.longSection?.position)}>
                   {longSections.firstSections.find((fls => fls.key === c.longSection?.first?.key))?.value}
                   {longSections.secondSections.find((sls => sls.key === c.longSection?.second?.key))?.value}
                 </group>
-                <group position={c.shortSection?.position}>
+                <group position={generatePosition(c.shortSection?.position)}>
                   {shortSections.firstSections.find(fss => fss.key === c.shortSection?.first?.key)?.value}
                   {shortSections.secondSections.find(sss => sss.key === c.shortSection?.second?.key)?.value}
                 </group>
-                <group visible={containerSelectionState.key === c.key} position={[10, 30, -12]}>
-                  <mesh>
-                    <coneGeometry args={[3, 3, 3]} />
-                    <meshNormalMaterial />
-                  </mesh>
-                </group>
                 <group visible={containerSelectionState.key === c.key}>
                   {positionBoxs.map((box, i) => (
-                    <mesh key={i} position={box.position}
+                    <mesh key={i} position={generatePosition(box.position)}
                       onClick={() => containerPositionState.setPosition(
                         {
                           x: box.directionPosition.x,
+                          y: box.directionPosition.y,
                           z: box.directionPosition.z,
                         },
                         {
-                          x: c.position?.[0]!,
-                          z: c.position?.[2]!
+                          x: c.position.x,
+                          y: c.position.y,
+                          z: c.position.z
                         })}>
                       <boxGeometry args={[3, 3, 3]} />
                       <meshStandardMaterial color={(
                         box.directionPosition.x === containerPositionState.position.direction.x
                           &&
+                          box.directionPosition.y === containerPositionState.position.direction.y
+                          &&
                           box.directionPosition.z === containerPositionState.position.direction.z
                           &&
                           containerSelectionState.key === c.key
                           &&
-                          c.position?.[0]! === containerPositionState.position.container.x
+                          c.position.x === containerPositionState.position.container.x
                           &&
-                          c.position?.[2]! === containerPositionState.position.container.z
+                          c.position.y === containerPositionState.position.container.y
+                          &&
+                          c.position.z === containerPositionState.position.container.z
                           ? 'yellow' : box.color
                       )} />
                     </mesh>
@@ -87,7 +90,7 @@ export default function App() {
             ))
           ) : (
             <Text3D font={'./fonts/noto-sans-regular.json'} position={[0, 0, 0]} size={10} height={7} letterSpacing={2} bevelEnabled={true} bevelOffset={0.7} >
-              Merhaba
+              Created By Çağdaş
               <meshNormalMaterial />
             </Text3D>
           )}

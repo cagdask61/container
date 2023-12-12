@@ -11,6 +11,7 @@ export interface ContainerPositionStateModel {
 
 export interface ContainerPositionVectorModel {
     x: number;
+    y: number;
     z: number;
 }
 
@@ -18,10 +19,12 @@ export const useContainerPositionStore = create<ContainerPositionStateModel>((se
     position: {
         direction: {
             x: 0,
+            y: 0,
             z: 0
         },
         container: {
             x: 0,
+            y: 0,
             z: 0
         }
     },

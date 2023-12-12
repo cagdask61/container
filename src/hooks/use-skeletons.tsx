@@ -4,8 +4,8 @@ import { SectionModel } from "../models/section-model";
 export function useSkeletons() {
     return [
         {
+            name: 'Skeleton',
             key: 'skeleton',
-            name: 'İskelet',
             value: <Skeleton position={[0, 0, 0]} />
         }
     ] as Array<SectionModel>;

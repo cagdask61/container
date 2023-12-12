@@ -37,14 +37,25 @@ export default memo(function GenerateContainer() {
             const firstShortSection = shortSections.firstSections.find(fss => fss?.key === values.shortSection.firstKey);
             const secondShortSection = shortSections.secondSections.find(sss => sss?.key === values.shortSection.secondKey);
 
+            const { container, direction } = containerPositionState.position;
+
             containerState.add({
-                position: [containerPositionState.position.direction.x + containerPositionState.position.container.x, 0, containerPositionState.position.direction.z + containerPositionState.position.container.z],
+                position: {
+                    x: direction.x + container.x,
+                    y: direction.y + container.y,
+                    z: direction.z + container.z
+                },
                 key: `${Math.round(Math.random() * 9999)}-${Math.round(Math.random() * 9999)}`,
                 skeleton: {
                     key: skeletons[0]?.key,
                     name: skeletons[0]?.name,
                 },
                 longSection: {
+                    position: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                    },
                     first: {
                         name: firstLongSection?.name,
                         key: firstLongSection?.key,
@@ -52,9 +63,14 @@ export default memo(function GenerateContainer() {
                     second: {
                         name: secondLongSection?.name,
                         key: secondLongSection?.key,
-                    },
+                    }
                 },
                 shortSection: {
+                    position: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                    },
                     first: {
                         name: firstShortSection?.name,
                         key: firstShortSection?.key,
@@ -74,7 +90,7 @@ export default memo(function GenerateContainer() {
     return (
         <form method="post" onSubmit={handleSubmit} className="flex flex-col items-center gap-y-3">
             <div className="flex flex-col items-center justify-center gap-y-5 bg-white/5 p-3 rounded w-full">
-                <span className="text-xl">Uzun Kısımlar</span>
+                <span className="text-xl">Long Sections</span>
                 <div className="grid grid-cols-12 items-center justify-center gap-x-5">
                     <label htmlFor="firstLongSection" className="col-span-3 w-full h-full flex items-center justify-center">
                         <span className="bg-[#ff2060] rounded-full px-2">x</span>
@@ -91,7 +107,7 @@ export default memo(function GenerateContainer() {
                 </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-y-5 bg-white/5 p-3 rounded w-full">
-                <span className="text-xl">Kısa Kısımlar</span>
+                <span className="text-xl">Short Sections</span>
                 <div className="grid grid-cols-12 items-center justify-center gap-x-5">
                     <label htmlFor="firstShortSection" className="col-span-3 w-full h-full flex items-center justify-center">
                         <span className="bg-[#2080ff] rounded-full px-2">z</span>
@@ -108,7 +124,7 @@ export default memo(function GenerateContainer() {
                 </div>
             </div>
             <div className="w-full">
-                <button type="submit" className="bg-green-400 active:bg-green-300 hover:scale-95 text-black w-full h-10 rounded font-medium ease-in-out duration-300">Oluştur</button>
+                <button type="submit" className="bg-green-400 active:bg-green-300 hover:scale-95 text-black w-full h-10 rounded font-medium ease-in-out duration-300">Generate</button>
             </div>
         </form>
     )

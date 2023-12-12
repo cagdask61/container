@@ -39,14 +39,23 @@ export default memo(function UpdateContainer() {
 
             const selectedContainerModel = containerState.containers.find(c => c.key === containerSelectionState.key);
 
+            if (!selectedContainerModel) {
+                throw new Error("no selected container");
+            }
+
             containerState.update({
-                position: selectedContainerModel?.position,
+                position: selectedContainerModel!.position,
                 key: containerSelectionState.key,
                 skeleton: {
                     key: skeletons[0]?.key,
                     name: skeletons[0]?.name,
                 },
                 longSection: {
+                    position: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                    },
                     first: {
                         key: firstLongSection?.key,
                         name: firstLongSection?.name
@@ -57,6 +66,11 @@ export default memo(function UpdateContainer() {
                     }
                 },
                 shortSection: {
+                    position: {
+                        x: 0,
+                        y: 0,
+                        z: 0
+                    },
                     first: {
                         key: firstShortSection?.key,
                         name: firstShortSection?.name
@@ -85,7 +99,7 @@ export default memo(function UpdateContainer() {
     return (
         <form method="post" onSubmit={handleSubmit} className="flex flex-col items-center gap-y-3">
             <div className="flex flex-col items-center justify-center gap-y-5 bg-white/5 p-3 rounded w-full">
-                <span className="text-xl">Uzun Kısımlar</span>
+                <span className="text-xl">Long Sections</span>
                 <div className="grid grid-cols-12 items-center justify-center gap-x-5">
                     <label htmlFor="firstLongSection" className="col-span-3 w-full h-full flex items-center justify-center">
                         <span className="bg-[#ff2060] rounded-full px-2">x</span>
@@ -102,7 +116,7 @@ export default memo(function UpdateContainer() {
                 </div>
             </div>
             <div className="flex flex-col items-center justify-center gap-y-5 bg-white/5 p-3 rounded w-full">
-                <span className="text-xl">Kısa Kısımlar</span>
+                <span className="text-xl">Short Sections</span>
                 <div className="grid grid-cols-12 items-center justify-center gap-x-5">
                     <label htmlFor="firstShortSection" className="col-span-3 w-full h-full flex items-center justify-center">
                         <span className="bg-[#2080ff] rounded-full px-2">z</span>
@@ -119,7 +133,7 @@ export default memo(function UpdateContainer() {
                 </div>
             </div>
             <div className="w-full">
-                <button type="submit" className="bg-yellow-400 active:bg-yellow-300 hover:scale-95 text-black w-full h-10 rounded font-medium ease-in-out duration-300">Güncelle</button>
+                <button type="submit" className="bg-yellow-400 active:bg-yellow-300 hover:scale-95 text-black w-full h-10 rounded font-medium ease-in-out duration-300">Update</button>
             </div>
         </form>
     )

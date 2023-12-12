@@ -14,19 +14,19 @@ export default memo(function SidebarTabs() {
 
     return (
         <TabView className="w-full" >
-            <TabPanel header="Nesneler" contentClassName="tab-height">
+            <TabPanel header="Containers" contentClassName="tab-height">
                 <Objects />
             </TabPanel>
-            <TabPanel header="Oluştur" contentClassName="tab-height">
+            <TabPanel header="Create" contentClassName="tab-height">
                 <GenerateContainer />
             </TabPanel>
-            <TabPanel header="Güncelle" contentClassName="tab-height">
+            <TabPanel header="Update" contentClassName="tab-height">
                 {containerSelectionState.key ? (
                     <UpdateContainer />
                 ) : (
                     <div className="w-full h-full flex items-center justify-center">
                         <p className="text-red-500 font-medium">
-                            Seçilen Nesne Yok!
+                            No selected containers!
                         </p>
                     </div>
                 )}
